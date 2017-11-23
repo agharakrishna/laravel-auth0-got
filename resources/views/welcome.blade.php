@@ -1,21 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-<script src="https://cdn.auth0.com/js/lock-9.1.min.js"></script>
+<script src="https://cdn.auth0.com/js/auth0/9.0.0/auth0.min.js"></script>
 <script type="text/javascript">
-
-  var lock = new Auth0Lock('PATkFym2gZQS3lEIUCS68qrSl8jgVD7P', 'unicodeveloper.auth0.com');
-
-
-  function signin() {
-    lock.show({
-        callbackURL: 'http://laravel-auth0.dev/auth0/callback'
-      , responseType: 'code'
-      , authParams: {
-        scope: 'openid email'  // Learn about scopes: https://auth0.com/docs/scopes
-      }
+    var webAuth = new auth0.WebAuth({
+        domain: 'unicodeveloper.auth0.com',
+        clientID: 'PATkFym2gZQS3lEIUCS68qrSl8jgVD7P'
     });
-  }
+
+    function signin() {
+        webAuth.authorize({
+            responseType: "code",
+            redirectUri: 'http://laravel-auth0.dev/auth0/callback'
+        });
+    }
 </script>
 <button onclick="window.signin();">Login</button>
 <!-- <div class="container">
@@ -25,7 +23,7 @@
                 <div class="panel-heading">List of Game of Thrones Characters</div>
 
                     @if(Auth::check())
-                    
+
                       <table class="table">
                           <tr>
                               <th>Character</th>
