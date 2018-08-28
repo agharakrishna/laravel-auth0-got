@@ -1,22 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<script src="https://cdn.auth0.com/js/auth0/9.0.0/auth0.min.js"></script>
-<script type="text/javascript">
-    var webAuth = new auth0.WebAuth({
-        domain: 'unicodeveloper.auth0.com',
-        clientID: 'PATkFym2gZQS3lEIUCS68qrSl8jgVD7P'
-    });
-
-    function signin() {
-        webAuth.authorize({
-            responseType: "code",
-            redirectUri: 'http://laravel-auth0.dev/auth0/callback'
-        });
-    }
-</script>
-<button onclick="window.signin();">Login</button>
-<!-- <div class="container">
+@if(Auth::guest())
+    <a href="/auth0/login" class="btn btn-primary">login</a>
+@endif
+<div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-success">
@@ -44,5 +32,5 @@
             @endif
         </div>
     </div>
-</div> -->
+</div>
 @endsection

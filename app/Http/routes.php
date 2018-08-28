@@ -13,9 +13,19 @@
 
 Route::get('/', 'ListController@show');
 
-Route::get('/auth0/callback', function() {
-   dd(Auth0::getUser());
-});
+Route::get('/auth0/callback', '\Auth0\Login\Auth0Controller@callback');
+
+Route::get('/auth0/login', function() {
+        $domain = env('AUTH0_DOMAIN');
+        $clientId = env('AUTH0_CLIENT_ID');
+        $redirectUri = env('AUTH0_CALLBACK_URL');
+        $authorizeUrl = sprintf(
+            'https://%s/authorize?scope=openid&client_id=%s&response_type=code&redirect_uri=%s',
+            $domain,
+            $clientId,
+            $redirectUri);
+        return redirect($authorizeUrl);
+    });
 
 Route::get('/logout', function () {
    Auth::logout();
